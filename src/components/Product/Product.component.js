@@ -1,14 +1,16 @@
-import React from "react";
+import React,{useContext} from "react";
 import PropTypes from "prop-types";
 
 import AddToCartButton from "../AddToCartButton";
 
+import {EcommerceContext} from "../Ecommerce";
+
 const Product = ({
   details: { id, name, price },
-  addToCart,
-  removeFromCart,
   type
 }) => {
+  const eCommerceContext = useContext(EcommerceContext);
+
   return (
     <div>
       <p>
@@ -19,10 +21,10 @@ const Product = ({
       </p>
       <div>
         {type !== "cart" && (
-          <AddToCartButton productId={id} addToCart={addToCart} />
+          <AddToCartButton productId={id} />
         )}
         {type === "cart" && (
-          <button onClick={() => removeFromCart(id)}>Remove from Cart</button>
+          <button onClick={() => eCommerceContext.removeFromCart(id)}>Remove from Cart</button>
         )}
       </div>
     </div>

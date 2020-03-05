@@ -3,6 +3,8 @@ import React from "react";
 import ProductsList from "../ProductsList";
 import Cart from "../Cart";
 
+import {EcommerceContext} from '.';
+
 class Ecommerce extends React.PureComponent {
   state = {
     name:"Ronit",
@@ -28,6 +30,11 @@ class Ecommerce extends React.PureComponent {
       products: []
     }
   };
+
+  store = {
+    addToCart: this.addProductToCart.bind(this),
+    removeFromCart: this.removeProductFromCart.bind(this)
+  }
 
   addProductToCart(productId) {
     //Check already product added in cart or not
@@ -63,19 +70,20 @@ class Ecommerce extends React.PureComponent {
   render() {
     return (
       <main id="ecommerce">
-        <h1>Welcome to {this.props.name}</h1>
-        <section>
-          <h2>Our Products</h2>
-          <ProductsList
-            products={this.state.products}
-            addToCart={this.addProductToCart.bind(this)}
-          />
-        </section>
+        <EcommerceContext.Provider value={this.store}>
+          <h1>Welcome to {this.props.name}</h1>
+          <section>
+            <h2>Our Products</h2>
+            <ProductsList
+              products={this.state.products}
+            />
+          </section>
 
-        <section>
-            <h2>Cart</h2>
-            <Cart products={this.state.cart.products} removeFromCart={this.removeProductFromCart.bind(this)} />
-        </section>
+          <section>
+              <h2>Cart</h2>
+              <Cart products={this.state.cart.products} />
+          </section>
+        </EcommerceContext.Provider>
       </main>
     );
   }

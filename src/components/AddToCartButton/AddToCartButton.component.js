@@ -1,5 +1,15 @@
-import React from 'react';
+import React, { useContext } from "react";
 
-const AddToCartButton = ({productId,addToCart})=>(<button className="btn" onClick={()=>addToCart(productId)}>Add to Cart</button>)
+import { EcommerceContext } from "../Ecommerce";
+
+const AddToCartButton = ({ productId, addToCart }) => {
+  const eCommerceContext = useContext(EcommerceContext);
+
+  return (
+    <button className="btn" onClick={() => eCommerceContext.addToCart(productId)}>
+      Add to Cart
+    </button>
+  );
+};
 
 export default React.memo(AddToCartButton);
